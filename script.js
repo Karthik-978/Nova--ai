@@ -28,4 +28,18 @@ navigator.mediaDevices
   })
   .catch((err) => {
     document.getElementById("response").innerText = "Camera error: " + err;
-  });
+  });function getAIResponse(userInput) {
+  userInput = userInput.toLowerCase();
+
+  if (userInput.includes("hello")) {
+    return "Hello! I'm Nova 👋";
+  } else if (userInput.includes("your name")) {
+    return "I'm Nova, your AI companion!";
+  } else if (userInput.includes("how are you")) {
+    return "I'm doing great! How about you?";
+  } else if (userInput.includes("bye")) {
+    return "Goodbye! See you soon!";
+  } else {
+    return "Hmm... I'm not sure how to answer that yet, but I'm learning!";
+  }
+}
