@@ -32,4 +32,6 @@ button {
 #response {
   margin-top: 15px;
   font-style: italic;
+}video {
+  transform: scaleX(-1);
 }
