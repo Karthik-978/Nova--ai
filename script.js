@@ -36,7 +36,7 @@ function startVoice() {
 
 // 🤖 AI Brain using ChatGPT API
 async function getAIResponse(userInput) {
-  const apiKey = "sk-abc123...your-real-key";
+  const apiKey = "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";
   // <--- Replace this with your real OpenAI API Key
   const url = "https://api.openai.com/v1/chat/completions";
 
