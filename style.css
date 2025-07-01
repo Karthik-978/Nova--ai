@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0f0f0f;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 16px;
+}
+h1 .nova {
+  color: #00ffcc;
+}
+video {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background: #00ffcc;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+#response {
+  margin-top: 15px;
+  font-style: italic;
+}
