@@ -1,48 +1,61 @@
-function startVoice() {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = "en-IN";
-  recognition.start();
-
-  document.getElementById("response").innerText = "Listening... 🎙️";
-
-  recognition.onresult = function (event) {
-    const text = event.results[0][0].transcript.toLowerCase();
-    document.getElementById("response").innerText = "You said: " + text;
-    const reply = getAIResponse(text);
-    document.getElementById("response").innerText = reply;
-
-    const synth = window.speechSynthesis;
-    const utter = new SpeechSynthesisUtterance(reply);
-    synth.speak(utter);
-  };
-
-  recognition.onerror = function () {
-    document.getElementById("response").innerText = "Sorry, I didn’t catch that. Try again!";
-  };
-}
-
-function getAIResponse(userInput) {
-  if (userInput.includes("hello") || userInput.includes("hi")) {
-    return "Hey there! I’m Nova 👋";
-  } else if (userInput.includes("your name")) {
-    return "I'm Nova, your intelligent companion!";
-  } else if (userInput.includes("how are you")) {
-    return "I’m doing great, thanks for asking!";
-  } else if (userInput.includes("who created you")) {
-    return "I was built by Karthik, my creator!";
-  } else if (userInput.includes("bye")) {
-    return "Goodbye! Take care!";
-  } else {
-    return "Hmm, I’m not sure how to answer that yet, but I’m learning!";
-  }
-}
-
+// 📷 Start camera
 const video = document.getElementById("video");
-navigator.mediaDevices
-  .getUserMedia({ video: true })
+
+navigator.mediaDevices.getUserMedia({ video: true })
   .then((stream) => {
     video.srcObject = stream;
   })
   .catch((err) => {
     document.getElementById("response").innerText = "Camera error: " + err;
   });
+
+// 🎤 Start voice input
+function startVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.start();
+
+  document.getElementById("response").innerText = "Listening... 🎙️";
+
+  recognition.onresult = async function (event) {
+    const text = event.results[0][0].transcript;
+    document.getElementById("response").innerText = "You said: " + text;
+
+    const reply = await getAIResponse(text);
+    document.getElementById("response").innerText = reply;
+
+    const utter = new SpeechSynthesisUtterance(reply);
+    window.speechSynthesis.speak(utter);
+  };
+
+  recognition.onerror = function () {
+    document.getElementById("response").innerText = "Voice error. Try again.";
+  };
+}
+
+// 🤖 AI Brain using ChatGPT API
+async function getAIResponse(userInput) {
+  const apiKey = "sk-abc123...your-real-key";
+  // <--- Replace this with your real OpenAI API Key
+  const url = "https://api.openai.com/v1/chat/completions";
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + apiKey
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: userInput }]
+      })
+    });
+
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
+  } catch (error) {
+    return "Error getting response from AI. Check your internet or API key.";
+  }
+}
