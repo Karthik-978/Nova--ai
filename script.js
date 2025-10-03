@@ -13,7 +13,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
 function startVoice() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
-  recognition.lang = "en-IN";
+  recognition.lang = "en-US";
   recognition.start();
 
   document.getElementById("response").innerText = "Listening... 🎙️";
@@ -34,28 +34,18 @@ function startVoice() {
   };
 }
 
-// 🤖 AI Brain using ChatGPT API
+// 🤖 Call backend to talk with OpenAI
 async function getAIResponse(userInput) {
-  const apiKey = "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";
-  // <--- Replace this with your real OpenAI API Key
-  const url = "https://api.openai.com/v1/chat/completions";
-
   try {
-    const response = await fetch(url, {
+    const response = await fetch("http://127.0.0.1:5000/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + apiKey
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: userInput }]
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userInput })
     });
 
     const data = await response.json();
-    return data.choices[0].message.content.trim();
+    return data.reply;
   } catch (error) {
-    return "Error getting response from AI. Check your internet or API key.";
+    return "Error: Cannot reach AI server.";
   }
 }
