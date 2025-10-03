@@ -6,6 +6,7 @@ body {
   text-align: center;
   padding: 20px;
 }
+
 .container {
   max-width: 400px;
   margin: auto;
@@ -13,14 +14,18 @@ body {
   padding: 20px;
   border-radius: 16px;
 }
+
 h1 .nova {
   color: #00ffcc;
 }
+
 video {
   width: 100%;
   border-radius: 12px;
   margin-top: 10px;
+  transform: scaleX(-1); /* Mirror camera */
 }
+
 button {
   padding: 10px 20px;
   margin-top: 20px;
@@ -28,10 +33,10 @@ button {
   border: none;
   border-radius: 10px;
   font-size: 16px;
+  cursor: pointer;
 }
+
 #response {
   margin-top: 15px;
   font-style: italic;
-}video {
-  transform: scaleX(-1);
 }
